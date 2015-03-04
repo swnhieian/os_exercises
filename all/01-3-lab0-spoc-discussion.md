@@ -110,12 +110,11 @@ SETGATE(intr, 0,1,2,3);
 - [x]  
 
 > 65538。代码如下：
-````
+```
 #include <stdio.h>
 /* System segment type bits */
 #define STS_IG32        0xE            // 32-bit Interrupt Gate
 #define STS_TG32        0xF            // 32-bit Trap Gate
-
 /* Gate descriptors for interrupts and traps */
 struct gatedesc {
     unsigned gd_off_15_0 : 16;        // low 16 bits of offset in segment
@@ -140,8 +139,6 @@ struct gatedesc {
     (gate).gd_p = 1;                                    \
     (gate).gd_off_31_16 = (uint32_t)(off) >> 16;        \
 }
-
-
 void main() {
     unsigned intr;
     intr = 8;
