@@ -115,9 +115,9 @@ SETGATE(intr, 0,1,2,3);
 - [x]  
 
 > 
-list.h中定义了一个双向链表的通用数据结构，可以进行插入、删除元素，查看链表是否为空等基本操作。
-代码
-[list.h](https://github.com/swnhieian/os_exercises/tree/master/all/lab0-spoc-code/list.h "list.h")
+list.h中定义了一个双向链表的通用数据结构，可以进行插入、删除元素，查看链表是否为空等基本操作。<br/>
+代码:
+[list.h](https://github.com/swnhieian/os_exercises/tree/master/all/lab0-spoc-code/list.h "list.h")  
 [test.c](https://github.com/swnhieian/os_exercises/tree/master/all/lab0-spoc-code/test.c "test.c")
 
 ---
