@@ -69,11 +69,17 @@ shmget 获取共享内存
  > 从lab8_result/kern/sys_call.c中可以看到，ucore的系统调用有二十多个函数，主要包括了文件操作、进程管理、内存管理、系统管理等方面的系统调用，下面参考linux的系统调用，依次说明ucore系统调用的详细功能：
 进程管理相关的系统调用有：
 sys_exit，终止进程
+
 sys_fork，创建进程
+
 sys_wait，等待子进程终止
+
 sys_exec，运行子程序
+
 sys_yield，进程主动让出处理器,并将自己等候调度队列队尾
+
 sys_kill，向进程或进程组发信号
+
 sys_getpid，获取进程标识号
 sys_putc，输出一个字符
 sys_pgdir，
@@ -101,12 +107,13 @@ sys_dup，复制已打开的文件描述字
  
 ## 3.4 linux系统调用分析
  1. 通过分析[lab1_ex0](https://github.com/chyyuu/ucore_lab/blob/master/related_info/lab1/lab1-ex0.md)了解Linux应用的系统调用编写和含义。(w2l1)
- >
+
+> 
 + objdump是Linux下的一个反汇编工具
 如运行`objdump -d lab1-ex0.exe`中的部分信息：
 ```
 Disassembly of section .text:
-
+> 
 0000000000400400 <_start>:
   400400:	31 ed                	xor    %ebp,%ebp
   400402:	49 89 d1             	mov    %rdx,%r9
