@@ -19,41 +19,41 @@
 >Linux系统调用，包含了大部分常用系统调用和由系统调用派生出的的函数,狭义上的系统调用就有二百多个，不同的内核系统调用数量不同，但数量均十分庞大。
 主要包括如下几个大类（并举例）：
 > 
-+ 进程控制
-fork创建一个新进程
-exit中止进程
-+ 文件读写操作
-open打开文件
-read读文件
-+ 文件系统操作
-chdir改变当前工作目录
-stat取文件状态信息
-+ 系统控制
-reboot重新启动
-time取得系统时间
-+ 内存管理
-sync 将内存缓冲区数据写回硬盘
-+ 网络管理
-getdomainname 取域名
-+ socket控制
-socket 建立socket
-bind 绑定socket到端口
-+ 用户管理
-getuid 获取用户标识号
-+ 进程间通信
-ipc 进程间通信总控制调用
-+ 信号
-kill 向进程或进程组发信号
-+ 消息
-msgsnd 发消息
-msgrcv 取消息
-+ 管道
-pipe 创建管道
-+ 信号量
-semget 获取一组信号量
-+ 共享内存
-shmget 获取共享内存
->等等
++ 进程控制  
+fork创建一个新进程  
+exit中止进程  
++ 文件读写操作  
+open打开文件  
+read读文件  
++ 文件系统操作  
+chdir改变当前工作目录  
+stat取文件状态信息  
++ 系统控制  
+reboot重新启动  
+time取得系统时间  
++ 内存管理  
+sync 将内存缓冲区数据写回硬盘  
++ 网络管理  
+getdomainname 取域名  
++ socket控制  
+socket 建立socket  
+bind 绑定socket到端口  
++ 用户管理  
+getuid 获取用户标识号  
++ 进程间通信  
+ipc 进程间通信总控制调用  
++ 信号  
+kill 向进程或进程组发信号  
++ 消息  
+msgsnd 发消息  
+msgrcv 取消息  
++ 管道  
+pipe 创建管道  
++ 信号量  
+semget 获取一组信号量  
++ 共享内存  
+shmget 获取共享内存  
+>等等  
 
 
 ```
@@ -66,32 +66,31 @@ shmget 获取共享内存
  
  1. 以ucore lab8的answer为例，uCore的系统调用有哪些？大致的功能分类有哪些？(w2l1)
  
- > 
-从lab8_result/kern/sys_call.c中可以看到，ucore的系统调用有二十多个函数，主要包括了文件操作、进程管理、内存管理、系统管理等方面的系统调用，下面参考linux的系统调用，依次说明ucore系统调用的详细功能：
-进程管理相关的系统调用有：
 > 
-sys_exit，终止进程
-sys_fork，创建进程
-sys_wait，等待子进程终止
+从lab8_result/kern/sys_call.c中可以看到，ucore的系统调用有二十多个函数，主要包括了文件操作、进程管理、内存管理、系统管理等方面的系统调用，下面参考linux的系统调用，依次说明ucore系统调用的详细功能：
++ 进程管理相关的系统调用有：
+sys_exit，终止进程  
+sys_fork，创建进程  
+sys_wait，等待子进程终止  
 sys_exec，运行子程序
-sys_yield，进程主动让出处理器,并将自己等候调度队列队尾
-sys_kill，向进程或进程组发信号
-sys_getpid，获取进程标识号
-sys_putc，输出一个字符
-sys_pgdir，
-sys_gettime，获取时间
-sys_sleep，睡眠
-文件操作相关的系统调用有：
-sys_open，打开文件
-sys_close，关闭文件
-sys_read，读取文件
-sys_write，写入文件
-sys_seek，移动文件指针
-sys_fstat，读取文件信息
-sys_fsync，把文件在内存中的信息写入磁盘
-sys_getcwd，获取当前的工作目录
-sys_getdirentry，获取目录下的文件
-sys_dup，复制已打开的文件描述字
+sys_yield，进程主动让出处理器,并将自己等候调度队列队尾  
+sys_kill，向进程或进程组发信号  
+sys_getpid，获取进程标识号  
+sys_putc，输出一个字符  
+sys_pgdir，  
+sys_gettime，获取时间  
+sys_sleep，睡眠  
++ 文件操作相关的系统调用有： 
+sys_open，打开文件  
+sys_close，关闭文件  
+sys_read，读取文件  
+sys_write，写入文件  
+sys_seek，移动文件指针  
+sys_fstat，读取文件信息  
+sys_fsync，把文件在内存中的信息写入磁盘  
+sys_getcwd，获取当前的工作目录  
+sys_getdirentry，获取目录下的文件  
+sys_dup，复制已打开的文件描述字   
 
  ```
   + 采分点：说明了ucore的大致数量（二十几个），说明了ucore系统调用的主要分类（文件操作，进程管理，内存管理等）
