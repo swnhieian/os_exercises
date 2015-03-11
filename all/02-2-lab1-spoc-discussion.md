@@ -124,8 +124,8 @@ bootloader的总大小不能超地512字节否则无法放入一个扇区中
 http://stackoverflow.com/questions/8757318/how-to-monitor-number-of-syscalls-executed-by-kernel
 > 在这个问答帖中提供了如下思路：　　
 > 1. 使用SystemTap脚本语言，进行统计，在原帖下已经有示例代码。SystemTap是一个监控、调试、诊断linux系统的工具。
-> 2. 使用ptrace的工具，包括strace/ltrace等相关工具。　　
-> ptrace的形式是：
+> 2. 使用ptrace的工具，包括strace/ltrace等相关工具。  
+> 　　ptrace的形式是：
 ```
 #include <sys/ptrace.h>
 int ptrace(int request, int pid, int addr, int data);
