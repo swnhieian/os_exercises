@@ -8,6 +8,7 @@ NOTICE
 - 有"hard"标记的题有一定难度，鼓励实现。
 - 有"easy"标记的题很容易实现，鼓励实现。
 - 有"midd"标记的题是一般水平，鼓励实现。  
+
 ---
 
 请描述ucore OS配置和驱动外设时钟的准备工作包括哪些步骤？ (w2l2)
@@ -21,11 +22,12 @@ NOTICE
 - [x]  
 
 > 初始化信息在kern_init()函数中  
-1. 对IDT进行初始化：通过idt_init()函数中使用的SETGATE宏初始化中断向量表，初始化后通过`lidt`的汇编命令加载idt
-2. 对中断控制器进行初始化：通过pic_init()函数完成 ，通过汇编的out指令进行
-3. 对时钟进行初始化：通过clock_init()函数完成，主要通过汇编的out指令进行
+1. 对IDT进行初始化：通过idt_init()函数中使用的SETGATE宏初始化中断向量表，初始化后通过`lidt`的汇编命令加载idt  
+2. 对中断控制器进行初始化：通过pic_init()函数完成 ，通过汇编的out指令进行  
+3. 对时钟进行初始化：通过clock_init()函数完成，主要通过汇编的out指令进行  
 
 lab1中完成了对哪些外设的访问？ (w2l2)
+
  ```
   + 采分点：说明了ucore OS访问的外设
   - 答案没有涉及如下3点；（0分）
@@ -66,15 +68,14 @@ cons_putc(int c) {
 
 lab1中printfmt函数用到了可变参，请参考写一个小的linux应用程序，完成实现定义和调用一个可变参数的函数。(spoc)
 - [x]  
+
 > 程序如下：
 ```
 #include <stdarg.h>
 #include <stdio.h>
-
 void sum(int n, ...) {
   va_list arg_ptr;
   int sum = 0;
-
   va_start(arg_ptr, n);
   for (int i = 0; i < n; i++) 
     sum += va_arg(arg_ptr, int);
@@ -82,7 +83,6 @@ void sum(int n, ...) {
   printf("sum : %d\n", sum);
   return ;
 }
-
 int main() {
   sum(2, 1, 2);
   sum(3, 1, 2, 3);
