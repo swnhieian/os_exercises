@@ -35,15 +35,19 @@ NOTICE
 + buddy system  
 　　优点：减小了外部碎片的大小，释放分区较快、较简单  
 　　缺点：存在内部碎片，在分区大小略大于２的幂时浪费较大  
+另一种可行的分配方法：  
+　　循环最先匹配方法：和最先匹配方法类似，只不过每次不是从头开始查找，而是从上次找到的空闲分区开始查找，这种方法可以使得空闲中的内存分布更加均匀，实现起来也简单，但将会缺乏大的空闲分区。  
+
 
 ## 小组思考题
 
 请参考ucore lab2代码，采用`struct pmm_manager` 根据你的`学号 mod 4`的结果值，选择四种（0:最优匹配，1:最差匹配，2:最先匹配，3:buddy systemm）分配算法中的一种或多种，在应用程序层面(可以 用python,ruby,C++，C，LISP等高语言)来实现，给出你的设思路，并给出测试用例。 (spoc)
 
 >  
-参考资料详见[伙伴分配器的一个极简实现](http://coolshell.cn/articles/10427.html#more-10427)
-代码参见[03-1-spoc-code/buddy.cpp](https://github.com/swnhieian/os_exercises/tree/master/all/03-1-spoc-code/buddy.cpp "buddy.cpp")  
-以下为测试用例及结果（以16个单位长的内存为例）
+这里采用buddy system的分配算法，用C++语言实现。  
+参考资料见[伙伴分配器的一个极简实现](http://coolshell.cn/articles/10427.html#more-10427)  
+代码见[03-1-spoc-code/buddy.cpp](https://github.com/swnhieian/os_exercises/tree/master/all/03-1-spoc-code/buddy.cpp "buddy.cpp")  
+以下为测试用例及结果（以16个单位长的内存为例，运行编译出的程序得到的结果）
 ```
 Initialize success!
 >> input 'm'+size for malloc; 'f'+addr for free; 'q' for quit
