@@ -23,7 +23,7 @@ NOTICE
 - [x]  
 
 >　　64位CPU的逻辑地址空间理论上可以高达2^64B，即2物理内存大小为2^64 Byte=16 EB,但是实际的物理地址空间和需求要远小于这个值，因此厂商实际只使用52位的地址总线，也即4 PB的虚拟地址空间。  
-x64下使用的四级页表(PML4-PDPT-PD-PT)及其映射过程：（参考资料[IA32e的内存_paging和TLB流程](http://blog.sina.com.cn/s/blog_5d123f940100g8xw.html)）   
+　　x64下使用的四级页表(PML4-PDPT-PD-PT)及其映射过程：（参考资料[IA32e的内存_paging和TLB流程](http://blog.sina.com.cn/s/blog_5d123f940100g8xw.html)）   
 　　0. 最底层的paging structures的基地址保存在CR3中，直接是52-bit的地址。CR3中保存的是 PML4 table的物理地址，而PML4 table中保存的是地址寄存器(线性地址) 47-39 bits所使用的物理地址序列。所有paging mode中的线性地址47-39 bits都是用来从PML4 table中选择更详细层的 paging structures的物理地址。  
 　　1. 根据线性地址47-39 bits得到了PML4对应元素中的物理地址，其指向的是 page-directory-pointer table，每一个 page-directory-pointer包含的是一个索引512 GB的物理内存范围，(注意，此512GB的内存范围是不必须相连的)此范围内的线性地址 paging时都会来到此page-directory-pointer,原因是它们的线性地址的47-39 bits相同。
 page-directory-pointer table中保存的是page-directroy的物理地址(简称PDP, page directroy-pointer)。线性地址的38-30 bits用来从此序列中得到更详细层的paging structures的物理地址。  
