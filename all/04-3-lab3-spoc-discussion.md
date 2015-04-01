@@ -103,29 +103,67 @@ NOTICE
 ---
 (1)(spoc) 请参考lab3_result的代码，思考如何在lab3_results中实现clock算法，并给出你的概要设计方案，可4人一个小组，说明你的方案中clock算法与LRU算法上相比，潜在的性能差异性。并进一说明LRU算法在lab3实现的可能性评价（给出理由）。
 
+> 
+　　在lab3实现FIFO算法的时候实现了一个pra_list_head链表，这个链表可以用来实现clock算法。在实现clock算法时需要有一位来记录访问位，这里可以在页表项的PTE_A(accessed)来充当，在clock算法实现过程中，只在访存时个性这一位，并根据这一位的值来选择需要替换的页即可。  
+　　clock算法和LRU算法相比，缺页率相对较低，但由于开销较小，因此性能要比较高。clock算法是FIFO算法和LRU算法之间的一个折中的算法。  
+　　在lab3中实现LRU算法的可能性较低，因为LRU算法有大量的开销，需要记录页访问的时间，但在实验中PTE/PDE的flag中预留位较少，难以完成这样的记录以支持LRU算法的实现。
+
 (2)(spoc) 理解内存访问的异常。在x86中内存访问会受到段机制和页机制的两层保护，请基于lab3_results的代码（包括lab1的challenge练习实现），请实践并分析出段机制和页机制各种内存非法访问的后果。，可4人一个小组，，找出尽可能多的各种内存访问异常，并在代码中给出实现和测试用例，在执行了测试用例后，ucore能够显示出是出现了哪种异常和尽量详细的错误信息。请在说明文档中指出：某种内存访问异常的原因，硬件的处理过程，以及OS如何处理，是否可以利用做其他有用的事情（比如提供比物理空间更大的虚拟空间）？哪些段异常是否可取消，并用页异常取代？
 
+> 
 1.
 访问一个非法的地址：0x100
+```
 page fault at 0x00000100: K/W [no page found].
 kernel panic at kern/trap/trap.c:165:
-    unhandled page fault.
-
+    unhandled page fault.  
+```
 2.
-没有设置GDT
-qemu: fatal: Trying to execute code outside RAM or ROM at 0xc0100012
-
+没有设置GDT  注释掉lgdt语句   
+qemu: fatal: Trying to execute code outside RAM or ROM at 0xc0100012  
 3.
-没有设置IDT  注释掉idt_init()
-在触发时钟中断的时候重启
-
-
+没有设置IDT  注释掉idt_init()  
+在触发时钟中断的时候重启,因为找不断处理中断的代码  
 4.
-页目录项不存在
-kernel panic at kern/mm/pmm.c:550:
-    assertion failed: (ptep = get_pte(boot_pgdir, 0x0, 0)) != NULL
-
+页目录项不存在  将页目录项中present位置为0  
+```
+kernel panic at kern/mm/pmm.c:550:  
+    assertion failed: (ptep = get_pte(boot_pgdir, 0x0, 0)) != NULL  
+```
 5.
+试图用一个超过段界限的偏移量访问段  
+将将gdt表中SEG_ASM的最后一项值（limit)置为0  
+修改bootloader里的gdt无法启动  
+修改entry里gdt的，不断重启  
+6.
+使用空选择子  用ljmp语句强行将cs寄存器的值设置为0  
+使用语句为：`asm volatile ("ljmp $0x0, $0x1111");`
+结果出现General Protection
+```
+trapframe at 0xc011ef34
+  edi  0x00000001
+  esi  0x00000000
+  ebp  0xc011ef88
+  oesp 0xc011ef54
+  ebx  0x00010094
+  edx  0xc010a39f
+  ecx  0x00000000
+  eax  0x0000001e
+  ds   0x----0010
+  es   0x----0010
+  fs   0x----0023
+  gs   0x----0023
+  trap 0x0000000d General Protection
+  err  0x00000000
+  eip  0xc0107919
+  cs   0x----0008
+  flag 0x00000086 PF,SF,IOPL=0
+kernel panic at kern/trap/trap.c:221:
+    unexpected trap in kernel.
+```
+
+
+
 
 
 
