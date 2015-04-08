@@ -192,7 +192,9 @@ class scheduler:
                     # if IO finished, the should do something for related process
        	            #YOUR CODE
                     self.move_to_ready(STATE_WAIT, pid)
-                    id_done = True
+                    io_done = True
+                    if (self.proc_info[self.curr_proc][PROC_STATE] == STATE_RUNNING):
+                        self.move_to_ready(STATE_RUNNING)
                     self.next_proc()
             
             # if current proc is RUNNING and has an instruction, execute it
@@ -202,7 +204,7 @@ class scheduler:
                 #pop a instruction from proc_info[self.curr_proc][PROC_CODE]to instruction_to_execute
                 #YOUR CODE
                 instruction_to_execute = self.proc_info[self.curr_proc][PROC_CODE].pop(0)
-
+            self.check_if_done()
             # OUTPUT: print what everyone is up to
             if io_done:
                 print '%3d*' % clock_tick,
