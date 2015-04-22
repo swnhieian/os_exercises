@@ -59,11 +59,34 @@ if options.solve == True:
     print '** Solutions **\n'
     if options.policy == 'SJF':
 		#YOUR CODE
+        print 'Execution trace:'
         thetime = 0
         joblist.sort(job_cmp)
         for job in joblist:
             print '[ time %3d ] Run job %d for %3.2f secs (DONE at %3.2f)' %(thetime,job[0], job[1], thetime+job[1])
             thetime += job[1]
+
+        print '\nFinal statistics:'
+        t     = 0.0
+        count = 0
+        turnaroundSum = 0.0
+        waitSum       = 0.0
+        responseSum   = 0.0
+        for tmp in joblist:
+            jobnum  = tmp[0]
+            runtime = tmp[1]
+            
+            response   = t
+            turnaround = t + runtime
+            wait       = t
+            print '  Job %3d -- Response: %3.2f  Turnaround %3.2f  Wait %3.2f' % (jobnum, response, turnaround, wait)
+            responseSum   += response
+            turnaroundSum += turnaround
+            waitSum       += wait
+            t += runtime
+            count = count + 1
+        print '\n  Average -- Response: %3.2f  Turnaround %3.2f  Wait %3.2f\n' % (responseSum/count, turnaroundSum/count, waitSum/count)
+        
     	#pass
     	
     if options.policy == 'FIFO':
