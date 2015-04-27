@@ -35,7 +35,7 @@
 ### (1)(spoc) 理解调度算法支撑框架的执行过程
 
 即在ucore运行过程中通过`cprintf`函数来完整地展现出来多个进程在调度算法和框架的支撑下，在相关调度点如何动态调度和执行的细节。(约全面细致约好)
-> 输出如下：
+> 输出如下： 代码链接：https://github.com/swnhieian/os_exercises/tree/master/all/lab6_result  
 ```
 ++ setup timer interrupts
 begin schedule()
