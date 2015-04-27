@@ -36,6 +36,7 @@
 
 即在ucore运行过程中通过`cprintf`函数来完整地展现出来多个进程在调度算法和框架的支撑下，在相关调度点如何动态调度和执行的细节。(约全面细致约好)
 > 输出如下：
+```
 ++ setup timer interrupts
 begin schedule()
 proc 1 dequeue
@@ -115,6 +116,7 @@ begin schedule()
 proc 1 enqueue
 proc 1 dequeue
 all user-mode processes have quit.
+```
 
 请完成如下练习，完成代码填写，并形成spoc练习报告
 > 需写练习报告和简单编码，完成后放到git server 对应的git repo中
