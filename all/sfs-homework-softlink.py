@@ -127,7 +127,7 @@ class inode:
         self.setAll(ftype, addr, refCnt)
 
     def setAll(self, ftype, addr, refCnt):
-        assert(ftype == 'd' or ftype == 'f' or ftype == 'free')
+        assert(ftype == 'd' or ftype == 'f' or ftype == 'free' or ftype == 'link')
         self.ftype  = ftype
         self.addr   = addr
         self.refCnt = refCnt
@@ -286,7 +286,6 @@ class fs:
         tinum = self.nameToInum[target]
         if self.data[ip].dirEntryExists(newfile):
             print "!!%s already exists in %s" %newfile,parent
-            return -1
         else:
             self.data[ip].addDirEntry(newfile, tinum)
 
@@ -296,6 +295,21 @@ class fs:
         #self.data[ip].addDirEntry(newfile, inum)
 
         return tinum
+
+    def createSoftLink(self, target, newfile, parent):
+        if parent not in self.dirs:
+            print "!!%s does not exist" %parent
+            return -1
+        ip = self.nameToInum[parent]
+        if self.data[ip].getFreeEntries == 0:
+            print "!!no free space in %s" %parent
+            return -1
+        if not target in self.nameToInum:
+            print "!!%s does not exist" %target
+            return -1
+        lnum = self.createFile(parent, newfile, 'link')
+        self.writeFile(newfile, target)
+        return lnum
 
     def createFile(self, parent, newfile, ftype):
     # YOUR CODE, 2012011367
@@ -322,7 +336,7 @@ class fs:
         if ftype == 'd':
             iaddr = self.dataAlloc()
             self.data[iaddr].setType(ftype)
-        elif ftype == 'f':
+        elif ftype == 'f' or ftype == 'link':
             iaddr = -1
                 
         if ftype == 'd':
@@ -387,7 +401,7 @@ class fs:
             fullName = parent + '/' + nfile
 
         dprint('try createLink(%s %s %s)' % (target, nfile, parent))
-        inum = self.createLink(target, nfile, parent)
+        inum = self.createSoftLink(target, nfile, parent)
         if inum >= 0:
             self.files.append(fullName)
             self.nameToInum[fullName] = inum
