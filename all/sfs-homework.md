@@ -121,3 +121,4 @@ create("/n");
 
 ## 问题3：
 实现`soft link`机制，并设计测试用例说明你实现的正确性。   
+> 代码见https://github.com/swnhieian/os_exercises/blob/master/all/sfs-homework-softlink.py
